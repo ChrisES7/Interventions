@@ -3,18 +3,29 @@
     <br/>
     <div class="card">
       <div class="card-header text-white bg-secondary">
+            <h5 class="card-header">Declarer un probleme</h5>
 	<!-- L'en-tête ici -->
       </div>
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            
+        <h5 class="card-title">Veuillez renseigner les zones suivantes et soummettre votre demande</h5>
+        
       </div>
-      <div class="card-footer">
-            <!-- Bouton save ici -->
-            <button class="btn btn-primary" type="submit">
-                  Sauvegarder
-            </button>    
-      </div>
+      
+<!--   <span *ngIf="(problemeForm.get('prenom').touched || 
+            problemeForm.get('prenom').dirty) &&
+            problemeForm.get('prenom').errors">
+      
+            <span *ngIf="[problemeForm.get('prenom').errors.['minlength']]">
+                   Indiquer au moins 3 caracteres
+            </span>
+      </span>
+-->
+
+      
+         </div>
+      
+
+      
     </div>
-</div>
 

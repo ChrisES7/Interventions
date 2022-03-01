@@ -21,49 +21,47 @@ describe('ProblemeComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
 
-  // Test 1
-  it('Champ Prenom invalide avec 2 caracteres',() => {
-    let zone = component.problemeForm.controls['Prenom']
-    zone.setValue('a'.repeat(2));
-    expect(zone.valid).toBeFalsy();
-  });
+  it("#1 | Zone PRÉNOM invalide avec 2 caractèress", () =>{
+    let zone = component.problemeForm.controls['prenom'];
+    zone.setValue("a".repeat(2));
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeTruthy();
+    });
 
-  // Test 2
-  it('Champ Prenom valide avec 3 caracteres',() => {
-    let zone = component.problemeForm.controls['Prenom']
+  it('#2 | Zone PRÉNOM valide avec 3 caractères',() => {
+    let zone = component.problemeForm.controls['prenom']
     zone.setValue('a'.repeat(3));
-    expect(zone.valid).toBeTruthy();
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
   });
 
-  // Test 3
-  it('Champ Prenom valide avec 200 caracteres ',() => {
-    let zone = component.problemeForm.controls['Prenom']
+  it('#3 | Zone PRÉNOM valide avec 200 caractères ',() => {
+    let zone = component.problemeForm.controls['prenom']
     zone.setValue('a'.repeat(200));
-    expect(zone.valid).toBeTruthy();
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
   });
 
-  // Test 4
-  it('Champ Prenom invalide avec aucune valeur',() => {
-    let zone = component.problemeForm.controls['Prenom']
+  it('#4 | Zone PRÉNOM invalide avec aucune valeur',() => {
+    let zone = component.problemeForm.controls['prenom']
     zone.setValue('a'.repeat(0));
-    expect(zone.valid).toBeFalsy();
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
   });
 
-  // Test 5
-  it('Champ Prenom valide avec 10 espaces',() => {
-    let zone = component.problemeForm.controls['Prenom']
+  it('#5 | Zone PRÉNOM valide avec 10 espaces',() => {
+    let zone = component.problemeForm.controls['prenom']
     zone.setValue(' '.repeat(10));
-    expect(zone.valid).toBeTruthy();
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
   });
 
-  // Test 6
-  it('Champ Prenom valide avec 2 espaces et 1 caractere',() => {
-    let zone = component.problemeForm.controls['Prenom']
+  it('#6 | Zone PRÉNOM valide avec 2 espaces et 1 caractère',() => {
+    let zone = component.problemeForm.controls['prenom']
     zone.setValue('  a'.repeat(1));
-    expect(zone.valid).toBeTruthy();
+    let errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
   });
+  
 });
