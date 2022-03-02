@@ -9,23 +9,49 @@
       <div class="card-body">
             
         <h5 class="card-title">Veuillez renseigner les zones suivantes et soummettre votre demande</h5>
-        
+        <div class="card-text">
+            <form class="form-horizontal"
+            novalidate
+            (ngSubmit)="save()"
+            [formGroup]="problemeForm">
+              <!-- Zone de texte PRENOM -->
+                <div class="form-group row">          
+                <label for="prenomId" class="col-md-2 col-form-label text-right">Prénom :</label>
+                <div class="col-md-10">
+                  <input class="form-control" 
+                  id="prenomId" 
+                  type="text" 
+                  placeholder="Votre prénom ici (obligatoire)" 
+                  formControlName="prenom"            
+                  [ngClass]="{'is-valid': (problemeForm.get('prenom').touched || 
+                  problemeForm.get('prenom').dirty) &&
+                  problemeForm.get('prenom').valid,
+                  'is-invalid': (problemeForm.get('prenom').touched || 
+                  problemeForm.get('prenom').dirty) &&
+                  !problemeForm.get('prenom').valid}"
+                  />
+                  
+                  <span class="form-text" *ngIf="(problemeForm.get('prenom').touched || 
+                                                problemeForm.get('prenom').dirty) &&
+                                                problemeForm.get('prenom').errors">
+                              <!-- 
+                              <small class="text-muted">
+                                    Saisir un prenom
+                              </small>
+                              -->
+                              
+                        <span *ngIf="[problemeForm.get('prenom').errors['minlength']]">
+                              <small class="text-muted">
+                                    Indiquer au moins 3 caracteres
+                              </small>
+                        </span>
+                        
+                  </span>
+                  </div>
+            </div>
+            </form>
+          </div>
       </div>
-      
-<!--   <span *ngIf="(problemeForm.get('prenom').touched || 
-            problemeForm.get('prenom').dirty) &&
-            problemeForm.get('prenom').errors">
-      
-            <span *ngIf="[problemeForm.get('prenom').errors.['minlength']]">
-                   Indiquer au moins 3 caracteres
-            </span>
-      </span>
--->
-
-      
-         </div>
-      
-
-      
+      </div> 
     </div>
 
