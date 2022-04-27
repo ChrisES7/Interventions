@@ -5,6 +5,9 @@ import { ITypeProbleme } from './probleme';
 import { TypeproblemeService } from './typeprobleme.service';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
+import { IProbleme } from './problemeDesc';
+import { ProblemeService } from './probleme.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'inter-probleme',
@@ -19,13 +22,16 @@ export class ProblemeComponent implements OnInit {
   problemeForm!: FormGroup;
   typesProbleme: ITypeProbleme[];
   errorMessage: any;
-  constructor(private fb: FormBuilder,private typesDeProbleme : TypeproblemeService) { }
+
+  probleme: IProbleme;
+
+  constructor(private fb: FormBuilder,private typesDeProbleme : TypeproblemeService,private problemeService : ProblemeService,private route : Router) { }
 
   ngOnInit(): void {
     this.problemeForm = this.fb.group({
       prenom: ['',[CaracteresValidator.longueurMinimum(3),Validators.required]],
       nom: ['',[Validators.maxLength(50),Validators.required]],
-      noTypeProbleme: ['',[Validators.required]],
+      noTypeProbleme: [''],
       notification: ['rien'],
       courrielGroup: this.fb.group({
         courriel: [{value: '', disabled: true}],
@@ -46,7 +52,30 @@ export class ProblemeComponent implements OnInit {
                error => this.errorMessage = <any>error);  
 
   }
+ 
   save(): void {
+    if (this.problemeForm.dirty && this.problemeForm.valid) {
+        // Copy the form values over the problem object values
+        this.probleme = this.problemeForm.value;
+        this.probleme.id = 0;
+         if(this.problemeForm.get('courrielGroup.courriel').value != '')
+        {
+          this.probleme.courriel = this.problemeForm.get('courrielGroup.courriel').value;
+        }
+    
+        this.problemeService.saveProbleme(this.probleme)
+            .subscribe({
+              next: () => this.onSaveComplete(),
+              error: err => this.errorMessage = err
+          })
+    } else if (!this.problemeForm.dirty) {
+        this.onSaveComplete();
+    }
+  }
+  onSaveComplete(): void {
+    // Reset the form to clear the flags
+    this.problemeForm.reset();  // Pour remettre Dirty à false.  Autrement le Route Guard va dire que le formulaire n'est pas sauvegardé
+    this.route.navigate(['/accueil']);
   }
 
   appliquerNotifications(typeNotification: string): void {
